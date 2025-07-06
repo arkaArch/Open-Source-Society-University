@@ -9,7 +9,7 @@
 ;; key should cause the box to go back to the left edge of the screen. When you do this, go all
 ;; the way back to your domain analysis and incorpoate the new feature.
 
-;; Now first part of the recipe i.e Domain analysis is in the image file '02-moving-box-domain-anlysis.png'
+;; Now first part of the recipe i.e Domain analysis is in the image file '01b-domain-anlysis.png'
 ;; Second part of the recipe:
 ;; Build the actual program
 ;; 1. Constants
@@ -59,9 +59,9 @@
 ;; start the world with (main 0)
 ;; 
 (define (main bp)
-  (big-bang bp                             ; BoxPosition
-            (on-tick   next-box-position)  ; BoxPosition -> BoxPosition
-            (to-draw   render)             ; BoxPosition -> Image
+  (big-bang bp                              
+            (on-tick   next-box-position)   ; BoxPosition -> BoxPosition
+            (to-draw   render)              ; BoxPosition -> Image
             (on-mouse  handle-mouse)        ; BoxPosition Integer Integer MouseEvent -> BoxPosition
             (on-key    handle-key)))        ; BoxPosition KeyEvent -> BoxImage
 
