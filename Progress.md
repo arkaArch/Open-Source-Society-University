@@ -1,3 +1,7 @@
+# Computer Science:
+* **Starting Date**: 1st July 2025
+* **Expected Finishing Date**: 30th June 2028
+
 ## Core-Programming: 
 
 ### Systematic-Program-Design
@@ -9,3 +13,5 @@
         * 04/07/2025:  HtDD
         * 05/07/2025:  HtDD + HtDW
         * 06/07/2025:  HtDW
+        * 07/07/2025:  Compound data
+        * 08/07/2025:  HtDW with compound data
