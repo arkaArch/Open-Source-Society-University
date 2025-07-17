@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname Function-Composition) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname 01-function-composition) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 ;; Problem
 ;; Imagine you have a bunch of picture that you would like to store as data and
 ;; present in different ways. We'll do a simple version of that here, and set
@@ -15,6 +15,13 @@
 
 (define BLANK (rectangle 0 0 "solid" "white"))
 
+;; Constants for examples:
+(define I1 (rectangle 10 20 "solid" "red"))
+(define I2 (rectangle 20 30 "solid" "blue"))
+(define I3 (rectangle 30 40 "solid" "green"))
+
+
+
 ;; Data definition
 
 ;; ListOfImage is one of:
@@ -22,8 +29,7 @@
 ;;   - (cons Image ListOfImage)
 ;; interp. a list of image
 (define LOI1 empty)
-(define LOI2 (cons (rectangle 20 30 "solid" "blue")
-                   (cons (rectangle 10 20 "solid" "red") empty)))
+(define LOI2 (cons I1 (cons I2 empty)))
 #;
 (define (fn-for-loi loi)
   (cond [(empty? loi) (...)]
@@ -50,19 +56,10 @@
 ;;       two functions. And in case of function composition base case test isn't
 ;;       really needed.
 
-(check-expect (arrange-images (cons (rectangle 20 30 "solid" "blue")
-                                    (cons (rectangle 30 40 "solid" "red")
-                                          empty)))
-              (beside (rectangle 20 30 "solid" "blue")
-                      (rectangle 30 40 "solid" "red")
-                      BLANK))
-
-(check-expect (arrange-images (cons (rectangle 20 30 "solid" "blue")
-                                    (cons (rectangle 10 20 "solid" "red")
-                                          empty)))
-              (beside (rectangle 10 20 "solid" "red")
-                      (rectangle 20 30 "solid" "blue")
-                      BLANK))
+(check-expect (arrange-images (cons I1 (cons I2 empty)))
+              (beside I1 I2 BLANK))
+(check-expect (arrange-images (cons I3 (cons I2 empty)))
+              (beside I2 I3 BLANK))
 
 ;(define (arrange-images loi) BLANK)  ;stub
 
@@ -85,12 +82,8 @@
 ;; ListOfImage -> Image
 ;; place images beside each other in order of list
 (check-expect (layout-images LOI1) BLANK)
-(check-expect (layout-images (cons (rectangle 20 30 "solid" "blue")
-                                   (cons (rectangle 10 20 "solid" "red")
-                                         empty)))
-                             (beside (rectangle 20 30 "solid" "blue")
-                                     (rectangle 10 20 "solid" "red")
-                                     BLANK))
+(check-expect (layout-images (cons I2 (cons I1 empty)))
+              (beside I2 I1 BLANK))
 
 ;(define (layout-images loi) BLANK)  ; stub
 ;; <Templates from ListOfImage>
@@ -105,15 +98,8 @@
 ;; ListOfImage -> ListOfImage
 ;; sort image in increasing order of size (area)
 (check-expect (sort-images LOI1) empty)
-(check-expect (sort-images
-               (cons (rectangle 20 30 "solid" "blue")
-                     (cons (rectangle 10 20 "solid" "yellow")
-                           (cons (rectangle 15 18 "solid" "red")
-                                 empty))))
-              (cons (rectangle 10 20 "solid" "yellow")
-                    (cons (rectangle 15 18 "solid" "red")
-                          (cons (rectangle 20 30 "solid" "blue")
-                                empty))))
+(check-expect (sort-images (cons I3 (cons I1 (cons I2 empty))))
+              (cons I1 (cons I2 (cons I3 empty))))
               
 ;(define (sort-images loi) loi)  ; stub
 ;; <Templates from ListOfImage>
@@ -135,16 +121,12 @@
 
 ;; NOTE: Sometimes the signature can't say everything that matters about the consumed data.
 ;;       In those cases we can write an 'ASSUMPTION' as part of the function design.
-(check-expect (insert (rectangle 15 18 "solid" "red") empty)
-              (cons (rectangle 15 18 "solid" "red") empty))
-(check-expect (insert (rectangle 15 18 "solid" "red")
-                      (cons (rectangle 10 20 "solid" "yellow")
-                                  (cons (rectangle 20 30 "solid" "blue")
-                                        empty)))
-              (cons (rectangle 10 20 "solid" "yellow")
-                    (cons (rectangle 15 18 "solid" "red")
-                          (cons (rectangle 20 30 "solid" "blue")
-                                empty))))
+(check-expect (insert I2 empty)
+              (cons I2 empty))
+(check-expect (insert I2 (cons I1 (cons I3 empty)))
+              (cons I1 (cons I2 (cons I3 empty))))
+(check-expect (insert I1 (cons I2 (cons I3 empty)))
+              (cons I1 (cons I2 (cons I3 empty))))
 
 ;(define (insert i los) los)  ;stub
 ;; <Templates from ListOfImage>
@@ -167,14 +149,8 @@
 
 ;; Image Image -> Boolean
 ;; produce true if area of first image is larger than the second
-(check-expect (larger?
-               (rectangle 10 20 "solid" "yellow")
-               (rectangle 15 18 "solid" "red"))
-               #false)
-(check-expect (larger?
-               (rectangle 15 22 "solid" "yellow")
-               (rectangle 10 20 "solid" "red"))
-               #true)
+(check-expect (larger? I3 I2) #true)
+(check-expect (larger? I1 I2) #false)
 
 ;(define (larger? i1 i2) #false)  ; stub
 
