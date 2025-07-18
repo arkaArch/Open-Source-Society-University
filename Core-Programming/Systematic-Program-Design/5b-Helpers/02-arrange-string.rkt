@@ -93,7 +93,7 @@
 ;; <Templates from list of string>
 
 (define (sort-strings los)
-  (cond [(empty? los) (...)]
+  (cond [(empty? los) empty]
         [else
          (insert-string (first los)
               (sort-strings (rest los)))]))
@@ -102,5 +102,20 @@
 
 ;; String ListOfString -> ListOfString
 ;; insert s in the correct place in the sorted list los
-(define (insert-string s los) los)  ;stub
+;; ASSUME: los is already sorted
+(check-expect (insert-string "Baylee" empty)
+              (cons "Baylee" empty))
+;; remember the assumption:
+;; "Baylee" and "Peyton" are assumed to be in sorted order
+;; HERE we are just focusing on inserting the 's' inside los, not sort the los
+(check-expect (insert-string "Paola" (cons "Baylee" (cons "Peyton" empty)))
+              (cons "Baylee" (cons "Paola" (cons "Peyton" empty))))
 
+;(define (insert-string s los) los)  ;stub
+
+(define (insert-string s los)
+  (cond [(empty? los) (cons s empty)]
+        [else
+         (if (string>=? s (first los))
+             (cons (first los) (insert-string s (rest los)))
+                   (cons s los))]))
