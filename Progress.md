@@ -14,10 +14,10 @@
     * 05/07/2025:  HtDD + HtDW
     * 06/07/2025:  HtDW
     * 07/07/2025:  Compound data
-    * 08/07/2025:  HtDW with compound data
-    * 09/07/2025:  HtDW with compound data
+    * 08/07/2025:  HtDW-with-compound-data
+    * 09/07/2025:  HtDW-with-compound-data
     * 10/07/2025:  ...
-    * 11/07/2025:  Self Reference
+    * 11/07/2025:  Self-Reference
     * 12/07/2025:  ...
     * 13/07/2025:  Reference
     * 14/07/2025:  Reference
@@ -25,3 +25,4 @@
     * 16/07/2025:  Revised
     * 17/07/2025:  Helpers
     * 18/07/2025:  Helpers
+    * 19/07/2025:  Binary-Search-Trees
